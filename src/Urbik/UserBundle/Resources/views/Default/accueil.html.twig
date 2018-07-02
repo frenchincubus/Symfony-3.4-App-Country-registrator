@@ -1,0 +1,17 @@
+{% extends "UrbikUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="container">
+            <div class="nav navbar-bottom">
+                    <a href="{{ path('urbik_user_admin') }}">admin</a>
+                </div>
+            <h1 class="text-center">Application de recensement test Urbik</h1>
+            <br><br><br><br>
+            <h4 class="text-center">Cliquez sur le bouton ci-dessous pour vous inscrire</h4>
+            <div class="text-center">
+                <a href="{{ path('urbik_user_createuser') }}" class="btn btn-success">inscription</a>
+            </div>
+            
+    </div>
+    
+{% endblock %}

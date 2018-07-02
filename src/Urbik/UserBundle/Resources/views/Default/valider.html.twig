@@ -1,0 +1,11 @@
+{% extends "UrbikUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <h3 class="text-center">Votre inscription a été validée, merci</h3>
+    <br> <h4 class="text-center">Vous allez recevoir un email de confirmation</h4>
+    <br> 
+    <div class="text-center">
+        <a href="{{ path('urbik_user_homepage') }}" class="btn btn-default">Retour à l'accueil</a>
+    </div>    
+
+{% endblock %}

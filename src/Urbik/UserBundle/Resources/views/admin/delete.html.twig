@@ -1,0 +1,17 @@
+{% extends "UrbikUserBundle::layout.html.twig" %}
+
+{% block body %}
+    {% if user %}
+        <div class="container">
+            <br><br><br><br><br></br><br><br>
+            <h4 class="text-center">Voulez-vous supprimer {{ user.nom }} {{ user.prenom }} ?</h4>
+            <div class="text-center">
+                <form action="{{ path('urbik_user_admin_delete', {'id': user.id}) }}" method="post">
+                    <a href="{{ path('urbik_user_admin_view', {'id': user.id }) }}" class="btn btn-default">Annuler</a>
+                    <input type="submit" value="supprimer" class="btn btn-danger">
+                    {{ form_rest(form) }}
+                   </form>
+            </div>          
+        </div>
+    {% endif %}
+{% endblock %}

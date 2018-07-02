@@ -1,0 +1,40 @@
+urbik_user_homepage:
+    path:     /
+    defaults: { _controller: UrbikUserBundle:Default:accueil }
+
+urbik_user_createuser:
+    path:     /newuser
+    defaults: { _controller: UrbikUserBundle:Default:index }
+
+urbik_user_validate:
+    path: /validate
+    defaults: { _controller: UrbikUserBundle:Default:validate }
+
+urbik_user_admin:
+    path:     /adminboard
+    defaults: { _controller: UrbikUserBundle:Default:view }
+
+urbik_user_admin_view:
+    path:     /adminboard/viewuser/{id}
+    defaults: 
+         _controller: UrbikUserBundle:Default:viewuser
+         requirements:
+            id: \d+
+    
+urbik_user_admin_new:
+    path:     /adminboard/createuser
+    defaults: { _controller: UrbikUserBundle:Default:create }
+
+urbik_user_admin_edit:
+    path:     /adminboard/edituser/{id}
+    defaults:
+         _controller: UrbikUserBundle:Default:edit 
+         requirements:
+            id: \d+
+
+urbik_user_admin_delete:
+    path:     /adminboard/deleteuser/{id}
+    defaults: 
+         _controller: UrbikUserBundle:Default:delete
+         requirements:
+            id: \d+

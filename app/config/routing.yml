@@ -1,0 +1,14 @@
+urbik_user:
+    resource: "@UrbikUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+login:
+    path: /login
+    defaults:
+        _controller: UrbikAuthBundle:Security:login
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
