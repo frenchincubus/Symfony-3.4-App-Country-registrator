@@ -4,13 +4,11 @@
 
   <div class="container">
     <br><br><br><br><br><br><br><br><br><br>
-    <div class="row align-items-center">
-        {# S'il y a une erreur, on l'affiche dans un joli cadre #}
+    <div class="row align-items-center">      
         {% if error %}
           <div class="alert alert-danger">{{ error.message }}</div>
         {% endif %}
 
-      {# Le formulaire, avec URL de soumission vers la route « login_check » #}
       <div class="text-center">
         <form action="{{ path('login_check') }}" method="post" class="form-inline">
             <div class="form-group">
@@ -23,9 +21,9 @@
                 <input type="password" id="password" name="_password" class="form-control" />
             </div>
         
-            <input type="submit" value="Connexion" class="btn btn-default" />
+            <input type="submit" value="Connexion" class="btn btn-success" />
           </form>
-          <br>
+          <br><br><br><br><br>
           <a href="{{ path('urbik_user_homepage') }}" class="btn btn-primary">Retour accueil</a>
       </div>
     </div>

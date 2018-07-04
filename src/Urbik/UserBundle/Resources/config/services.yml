@@ -5,8 +5,7 @@ services:
 
   urbik_user.email.application_mailer:
     class: Urbik\UserBundle\Email\RegistrationMail
-    arguments:
-      - "@mailer"
+    arguments: ["@mailer", "@doctrine"]
 
   urbik_user.email.registration_listener:
     class: Urbik\UserBundle\Email\RegistrationListener
@@ -14,3 +13,8 @@ services:
       - "@urbik_user.email.application_mailer"
     tags:
       - { name: doctrine.event_listener, event: postPersist }
+
+  urbik_user.twig.country_extension:
+    class: Urbik\UserBundle\Twig\CountryExtension
+    tags:
+      - { name: twig.extension }

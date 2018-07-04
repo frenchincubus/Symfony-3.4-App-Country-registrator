@@ -13,11 +13,11 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserType extends AbstractType
 {
+    
     /**
      * {@inheritdoc}
      */
@@ -45,13 +45,18 @@ class UserType extends AbstractType
         ];
 
         $request = Request::createFromGlobals();
-        $country = $this->get_country($request);
+        $country = $this->getCountry($request);
 
         $builder
-        ->add('nom', TextType::class)
-        ->add('prenom', TextType::class)
+        ->add('nom', TextType::class, array(
+            'label' => 'last name/nom'
+        ))
+        ->add('prenom', TextType::class, array(
+            'label' => 'first name/prénom'
+        ))
         ->add('birthdate', BirthdayType::class, array(
-            'format' => 'dd/MM/yyyy'
+            'format' => 'dd/MM/yyyy',
+            'label' => 'birthdate/date de naissance'
         ))
         ->add('mail', EmailType::class)
         ->add('sex', ChoiceType::class, array(
@@ -73,7 +78,7 @@ class UserType extends AbstractType
             'choices' => $jobChoices,
             'expanded' => false,
             'multiple' => false,
-            'label' => 'Profession',
+            'label' => 'Job/Profession',
             'required' => true
         ))
         ->add('save', SubmitType::class);
@@ -95,9 +100,15 @@ class UserType extends AbstractType
         return 'urbik_userbundle_user';
     }
 
-    public function get_country(Request $request) {
+    /**
+     *  getCountry function
+     *  use the client IP and request the ip-api API 
+     *  return an serialized Object (from a JSON response)
+     *  on a localhost, ip 127.0.0.1 return a non-success status, so the API use the public ip (request without args) 
+     */
 
-        // $request = Request::createFromGlobals();
+    public function getCountry(Request $request)
+    {
         $ip = $request->getClientIp();
 
         $query = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip)); //connection au serveur de ip-api.com et recuperation des données
@@ -110,11 +121,16 @@ class UserType extends AbstractType
                 'country' => $query['country'],
                 'countryCode' => $query['countryCode'],
                 'region' => $query['regionName'],
-                'ip' => $country['query']
+                'ip' => $query['query']
             );
-        }
-    //  else {
-    //     echo "Erreur de connection à l'adresse: ". $ip;
-    // }
+        }  else {
+                $query = @unserialize(file_get_contents('http://ip-api.com/php/'));
+                return array(
+                    'country' => $query['country'],
+                    'countryCode' => $query['countryCode'],
+                    'region' => $query['regionName'],
+                    'ip' => $query['query']
+                );
+    }
     }
 }

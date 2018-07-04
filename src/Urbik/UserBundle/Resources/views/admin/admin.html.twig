@@ -1,37 +1,77 @@
 {% extends "UrbikUserBundle::layout.html.twig" %}
 
+
 {% block body %}
 <div class="container">
     <br>
-        <div class=" col-xs-6">
-                <a href="{{path('urbik_user_admin_new') }}" class="btn btn-success float-left">Nouveau</a>
-                
+        <div class=" col-xs-4">
+                <a href="{{path('urbik_user_admin_new') }}" class="btn btn-success float-left">Nouveau</a>         
         </div>
-        <div class="col-xs-6 text-right">
+        <div class=" col-xs-4 text-center">
+                <a href="{{path('urbik_admin_edit_mail') }}" class="btn btn-success">Modifier mail</a>         
+        </div>
+        <div class="col-xs-4 text-right">
                 <a href="{{path('logout') }}" class="btn btn-success float-right">Déconnexion</a>
         </div>
         <br>
     {% if users %}
-    <table class="table table-striped">
-        <thead class="thead-light">
-            <tr>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Pays</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-            <tr>
-                <td>{{ user.nom }}</td>
-                <td>{{ user.prenom }}</td>
-                <td>{{ user.country }}</td>
-                <td><a href="{{path('urbik_user_admin_view', {'id': user.id }) }}" class="btn btn-primary">Voir</a></td>
-            </tr>
+        <br>
+        <h2 class="text-center">Liste des inscrits</h2>
+        <br>
+        <select name="country" id="countries">
+            <option selected>choisissez le pays</option>
+            {% for country in countries %}
+            <option value="{{ country.country }}">{{ country.country | countryName }}</option>
             {% endfor %}
-        </tbody>
-    </table>
+        </select>
+        <br><br>
+        
+                {% for country in countries %}               
+                <table name="{{ country.country }}" class="table table-striped">
+                    <caption> <h3>{{ country.country | countryName }}</h3></caption>
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Pays</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            {% if user.country == country.country %}
+                                <tr>
+                                    <td>{{ user.nom }}</td>
+                                    <td>{{ user.prenom }}</td>
+                                    <td>{{ user.country | countryName }}</td>
+                                    <td><a href="{{path('urbik_user_admin_view', {'id': user.id }) }}" class="btn btn-primary">Voir</a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endfor %}
+        
+       
     {% endif %}
 </div>
+<script type="text/javascript">
+    var country = document.getElementById('countries');
+    var table = document.getElementsByTagName('table');
+
+    window.addEventListener('load', event =>{
+        for (var i=0; i<table.length; i++) {
+            table[i].classList.add('hidden');
+         }
+    });
+    country.addEventListener('change', () => {
+       
+        console.log('action');
+            for (var i=0; i<table.length; i++) {
+               table[i].classList.add('hidden');
+            }
+            var tableCountry = document.getElementsByName(country.value);
+            tableCountry[0].classList.remove('hidden');        
+    });    
+</script>
 {% endblock %}

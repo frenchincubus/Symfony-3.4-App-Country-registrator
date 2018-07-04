@@ -12,6 +12,8 @@ use Doctrine\ORM\QueryBuilder;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    // function which returns an array of users sorted by country
     public function sortedUsers()
     {
         return $this
@@ -20,5 +22,15 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         ->getQuery()
         ->getResult()
         ;
+    }
+
+    // Returns an array of all registered users'countries
+      
+    public function onlyCountries()
+    {
+        $query = $this->_em->createQuery('SELECT DISTINCT a.country FROM UrbikUserBundle:User a ORDER BY a.country');
+        $result = $query->getResult();
+
+        return $result;
     }
 }

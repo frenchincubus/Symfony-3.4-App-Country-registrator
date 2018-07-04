@@ -2,6 +2,8 @@
 
 namespace Urbik\UserBundle\Email;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
+
 use Urbik\UserBundle\Entity\User;
 
 class RegistrationMail
@@ -11,19 +13,25 @@ class RegistrationMail
      */
     private $mailer;
 
+    /**
+     * @var Doctrine\Bundle\DoctrineBundle\Registry
+     */
+    private $doctrine;
 
-
-    public function __construct(\Swift_Mailer $mailer)
+    public function __construct(\Swift_Mailer $mailer, Registry $doctrine)
     {
         $this->mailer = $mailer;
+        $this->doctrine = $doctrine;
     }
 
     public function sendMail(User $user)
     {
+        $admin = $this->doctrine->getEntityManager()->getRepository('UrbikAuthBundle:Admin')->findAll();
+
         $message = (new \Swift_Message('Confirmation d\'inscription '.$user->getNom().' '.$user->getPrenom()))
-                    ->setFrom('misterbluepearl@hotmail.com')
+                    ->setFrom(['misterbluepearl@hotmail.com' => 'Urbik Admin'])
                     ->setTo($user->getMail())
-                    ->setBcc('misterbluepearl@hotmail.com')
+                    ->setBcc($admin[0]->getEmail())
                     ->setBody(
                         '<h3>Message de confirmation</h3>
 

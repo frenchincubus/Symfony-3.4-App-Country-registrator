@@ -3,7 +3,11 @@
 {% block body %}
     <div class="container">
             <div class="nav navbar-bottom">
+                    {% if registeredAdmin is not empty %}
                     <a href="{{ path('urbik_user_admin') }}">admin</a>
+                    {% else %}
+                    <a href="{{ path('urbik_admin_email') }}">admin</a>
+                    {% endif %}
                 </div>
             <h1 class="text-center">Application de recensement test Urbik</h1>
             <br><br><br><br>

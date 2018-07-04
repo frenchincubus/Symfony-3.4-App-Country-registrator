@@ -11,7 +11,7 @@
                             <p><span>Date de naissance: </span><span>{{ user.birthdate.format('d M Y') }}</span></p>
                             <p><span>Adresse mail: </span><span>{{ user.mail }}</span></p>
                             <p><span>Sexe: </span><span>{{ user.sex }}</span></p>
-                            <p><span>Pays: </span><span>{{ user.country }}</span></p>
+                            <p><span>Pays: </span><span>{{ user.country | countryName }}</span></p>
                             <p><span>Région: </span><span>{{ user.region }}</span></p>
                             <p><span>Profession: </span><span>{{ user.job }}</span></p>
                         </div>

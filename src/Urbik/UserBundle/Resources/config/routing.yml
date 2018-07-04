@@ -10,6 +10,10 @@ urbik_user_validate:
     path: /validate
     defaults: { _controller: UrbikUserBundle:Default:validate }
 
+urbik_admin_email:
+    path: /newadmin
+    defaults: { _controller: UrbikAuthBundle:Security:AdminMail }
+   
 urbik_user_admin:
     path:     /adminboard
     defaults: { _controller: UrbikUserBundle:Default:view }
@@ -38,3 +42,8 @@ urbik_user_admin_delete:
          _controller: UrbikUserBundle:Default:delete
          requirements:
             id: \d+
+
+
+urbik_admin_edit_mail:
+    path: /adminboard/editmail
+    defaults: { _controller: UrbikAuthBundle:Security:EditMail }
