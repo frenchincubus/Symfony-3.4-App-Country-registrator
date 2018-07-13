@@ -72,7 +72,7 @@ class UserType extends AbstractType
         ))
         ->add('region', HiddenType::class, array(
             'data' => $country['region'],
-            'disabled' => true
+            'disabled' => false
         ))
         ->add('job', ChoiceType::class, array(
             'choices' => $jobChoices,
