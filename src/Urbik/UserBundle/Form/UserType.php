@@ -109,7 +109,8 @@ class UserType extends AbstractType
 
     public function getCountry(Request $request)
     {
-        $ip = $request->getClientIp();
+        // $ip = $request->getClientIp();
+        $ip = $this->getIpAddress();
 
         $query = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip)); //connection au serveur de ip-api.com et recuperation des données
     
@@ -132,5 +133,15 @@ class UserType extends AbstractType
                     'ip' => $query['query']
                 );
     }
+    }
+
+    function getIpAddress() {
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ipAddresses = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            return trim(end($ipAddresses));
+        }
+        else {
+            return $_SERVER['REMOTE_ADDR'];
+        }
     }
 }
